@@ -5,10 +5,16 @@
   "description": "",
   "main": "index.js",
   "workspaces": [
-    "packages/*"
+    "packages/coral-renderer",
+    "packages/playground"
   ],
   "scripts": {
+    "start": "npm run start --workspace=coral-renderer-playground",
+    "build": "echo WAT",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@talend/scripts-config-prettier": "^11.0.0"
   },
   "author": "",
   "license": "Apache-2.0"
