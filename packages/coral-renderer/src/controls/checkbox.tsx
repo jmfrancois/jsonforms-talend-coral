@@ -18,7 +18,7 @@ import {
 import { Form } from '@talend/design-system';
 import { Control, DispatchCell, withJsonFormsControlProps } from '@jsonforms/react';
 
-export function InputControl(props: any) {
+export function ChecboxControl(props: any) {
 	const {
 		description,
 		id,
@@ -46,14 +46,17 @@ export function InputControl(props: any) {
 		rootSchema: rootSchema,
 		config: config,
 	};
-	return <Form.Text label={label} value={props.data} name="company" required={props.required} />;
+	return (
+		<Form.Checkbox label={label} checked={props.data} name="company" required={props.required} />
+	);
 }
 
-const isCorrectType = schemaTypeIs('string');
-function isInputText(uischema: UISchemaElement, schema: JsonSchema, context: TesterContext) {
+const isCorrectType = schemaTypeIs('boolean');
+function isCheckbox(uischema: UISchemaElement, schema: JsonSchema, context: TesterContext) {
+	console.log(isControl(uischema), isCorrectType(uischema, schema, context));
 	return isControl(uischema) && isCorrectType(uischema, schema, context);
 }
 
-export const inputControlTester: RankedTester = rankWith(1, isInputText);
+export const checkboxTester: RankedTester = rankWith(1, isCheckbox);
 
-export default withJsonFormsControlProps(InputControl);
+export default withJsonFormsControlProps(ChecboxControl);

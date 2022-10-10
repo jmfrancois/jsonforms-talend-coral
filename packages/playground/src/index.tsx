@@ -1,10 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { App } from './App';
 
 import './index.css';
-import App from './App';
+
 i18n.use(initReactI18next).init({
 	react: {
 		useSuspense: false,

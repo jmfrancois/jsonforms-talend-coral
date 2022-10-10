@@ -4,21 +4,14 @@ import {
 	vanillaRenderers,
 	InputControl as VanilaInput,
 } from '@jsonforms/vanilla-renderers';
+import ChecboxControl, { checkboxTester } from './controls/checkbox';
 
 import InputControl, { inputControlTester } from './controls/input';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	...vanillaRenderers.filter(i => i.renderer !== VanilaInput),
 	{ tester: inputControlTester, renderer: InputControl },
-	// { tester: radioGroupControlTester, renderer: RadioGroupControl },
-	// { tester: oneOfRadioGroupControlTester, renderer: OneOfRadioGroupControl },
-	// { tester: arrayControlTester, renderer: ArrayControl },
-	// { tester: labelRendererTester, renderer: LabelRenderer },
-	// { tester: categorizationTester, renderer: Categorization },
-	// { tester: tableArrayControlTester, renderer: TableArrayControl },
-	// { tester: groupTester, renderer: GroupLayout },
-	// { tester: verticalLayoutTester, renderer: VerticalLayout },
-	// { tester: horizontalLayoutTester, renderer: HorizontalLayout }
+	{ tester: checkboxTester, renderer: ChecboxControl },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [
