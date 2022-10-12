@@ -12,34 +12,60 @@ const schema = {
 			type: 'string',
 			enum: ['coral', 'vanilla'],
 		},
-		string: {
-			type: 'string',
-			minLength: 1,
+		primitives: {
+			type: 'object',
+			properties: {
+				string: {
+					type: 'string',
+					minLength: 1,
+				},
+				stringmulti: {
+					type: 'string',
+				},
+				boolean: {
+					type: 'boolean',
+				},
+				toggle: {
+					type: 'boolean',
+				},
+				date: {
+					type: 'string',
+					format: 'date',
+				},
+				time: {
+					type: 'string',
+					format: 'time',
+				},
+				datetime: {
+					type: 'string',
+					format: 'date-time',
+				},
+				integer: {
+					type: 'integer',
+					maximum: 5,
+				},
+			},
 		},
-		stringmulti: {
-			type: 'string',
-		},
-		boolean: {
-			type: 'boolean',
-		},
-		toggle: {
-			type: 'boolean',
-		},
-		date: {
-			type: 'string',
-			format: 'date',
-		},
-		time: {
-			type: 'string',
-			format: 'time',
-		},
-		datetime: {
-			type: 'string',
-			format: 'date-time',
-		},
-		integer: {
-			type: 'integer',
-			maximum: 5,
+		advanced: {
+			type: 'object',
+			properties: {
+				gender: {
+					oneOf: [
+						{
+							const: 'male',
+							title: 'Male',
+						},
+						{
+							const: 'female',
+							title: 'Female',
+						},
+						{
+							const: 'other',
+							title: 'Diverse',
+						},
+					],
+				},
+			},
 		},
 	},
 	required: ['name'],
@@ -53,42 +79,47 @@ const uischema = {
 			scope: '#/properties/renderer',
 		},
 		{
-			type: 'Control',
-			scope: '#/properties/boolean',
+			type: 'HorizontalLayout',
+			elements: [
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/boolean',
+				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/toggle',
+					options: {
+						toggle: true,
+					},
+				},
+			],
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/toggle',
-			options: {
-				toggle: true,
-			},
+			scope: '#/properties/primitives/properties/string',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/string',
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/stringmulti',
+			scope: '#/properties/primitives/properties/stringmulti',
 			options: {
 				multi: true,
 			},
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/date',
+			scope: '#/properties/primitives/properties/date',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/time',
+			scope: '#/properties/primitives/properties/time',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/datetime',
+			scope: '#/properties/primitives/properties/datetime',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/integer',
+			scope: '#/properties/primitives/properties/integer',
 		},
 	],
 };
