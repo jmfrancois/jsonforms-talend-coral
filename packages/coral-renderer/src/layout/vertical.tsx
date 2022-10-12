@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { RankedTester, rankWith, RendererProps, uiTypeIs, VerticalLayout } from '@jsonforms/core';
+import { Layout, RankedTester, rankWith, RendererProps, uiTypeIs } from '@jsonforms/core';
 import { withJsonFormsLayoutProps, JsonFormsDispatch, useJsonForms } from '@jsonforms/react';
 import { StackVertical } from '@talend/design-system';
 
-function BaseVerticalLayoutRenderer(props: any) {
+function BaseVerticalLayoutRenderer(props: RendererProps) {
 	console.log(props);
+	const uischema = props.uischema as Layout;
 	const { renderers, cells } = useJsonForms();
 	return (
 		<StackVertical gap="S" align="stretch">
-			{props.uischema.elements.map((child: any, index: any) => (
+			{uischema.elements.map((child: any, index: any) => (
 				<div key={`${props.path}-${index}`}>
 					<JsonFormsDispatch
 						renderers={renderers}
