@@ -10,6 +10,7 @@ import { TimeControl, timeTester } from './controls/time';
 import { StringControl, stringTester } from './controls/string';
 import { IntegerControl, integerTester } from './controls/integer';
 import { DateTimeControl, dateTimeTester } from './controls/datetime';
+import { SelectControl, selectTester } from './controls/select';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	...vanillaRenderers.filter(i => i.renderer !== VanilaInput),
@@ -19,6 +20,7 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: timeTester, renderer: TimeControl },
 	{ tester: dateTimeTester, renderer: DateTimeControl },
 	{ tester: integerTester, renderer: IntegerControl },
+	{ tester: selectTester, renderer: SelectControl },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [

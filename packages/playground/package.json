@@ -10,6 +10,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@jsonforms/vanilla-renderers": "^3.0.0",
     "@talend/icons": "*",
     "@talend/design-system": "^5.0.0",
     "@talend/jsonforms-coral": "*",

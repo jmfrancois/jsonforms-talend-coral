@@ -12,7 +12,7 @@ export function BaseDateTimeControl(props: any) {
 			label={props.label}
 			value={props.data}
 			name={props.path}
-			onChange={e => props.handleChange(e.target.value)}
+			onChange={e => props.handleChange(props.path, e.target.value)}
 			required={props.required}
 		/>
 	);

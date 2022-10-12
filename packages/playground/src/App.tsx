@@ -3,10 +3,15 @@ import React from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
 import { Form, ThemeProvider } from '@talend/design-system';
+import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
 
 const schema = {
 	type: 'object',
 	properties: {
+		renderer: {
+			type: 'string',
+			enum: ['coral', 'vanilla'],
+		},
 		string: {
 			type: 'string',
 			minLength: 1,
@@ -15,6 +20,9 @@ const schema = {
 			type: 'string',
 		},
 		boolean: {
+			type: 'boolean',
+		},
+		toggle: {
 			type: 'boolean',
 		},
 		date: {
@@ -42,11 +50,15 @@ const uischema = {
 	elements: [
 		{
 			type: 'Control',
-			scope: '#/properties/boolean',
+			scope: '#/properties/renderer',
 		},
 		{
 			type: 'Control',
 			scope: '#/properties/boolean',
+		},
+		{
+			type: 'Control',
+			scope: '#/properties/toggle',
 			options: {
 				toggle: true,
 			},
@@ -81,7 +93,19 @@ const uischema = {
 	],
 };
 
-const initialData = {};
+const initialData = {
+	renderer: 'coral',
+};
+
+const RENDERER: Record<string, any> = {
+	vanilla: vanillaRenderers,
+	coral: renderers,
+};
+
+const CELLS: Record<string, any> = {
+	vanilla: vanillaCells,
+	coral: cells,
+};
 
 export function App() {
 	const [data, setData] = React.useState(initialData);
@@ -95,8 +119,8 @@ export function App() {
 						schema={schema}
 						uischema={uischema}
 						data={data}
-						renderers={renderers}
-						cells={cells}
+						renderers={RENDERER[data.renderer]}
+						cells={CELLS[data.renderer]}
 						onChange={({ data }) => setData(data)}
 					/>
 				</Form>
