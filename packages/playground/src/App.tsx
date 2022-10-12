@@ -7,21 +7,29 @@ import { Form, ThemeProvider } from '@talend/design-system';
 const schema = {
 	type: 'object',
 	properties: {
-		name: {
+		string: {
 			type: 'string',
 			minLength: 1,
 		},
-		description: {
+		stringmulti: {
 			type: 'string',
 		},
-		done: {
+		boolean: {
 			type: 'boolean',
 		},
-		dueDate: {
+		date: {
 			type: 'string',
 			format: 'date',
 		},
-		rating: {
+		time: {
+			type: 'string',
+			format: 'time',
+		},
+		datetime: {
+			type: 'string',
+			format: 'date-time',
+		},
+		integer: {
 			type: 'integer',
 			maximum: 5,
 		},
@@ -34,26 +42,41 @@ const uischema = {
 	elements: [
 		{
 			type: 'Control',
-			scope: '#/properties/name',
+			scope: '#/properties/boolean',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/done',
+			scope: '#/properties/boolean',
+			options: {
+				toggle: true,
+			},
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/description',
+			scope: '#/properties/string',
+		},
+		{
+			type: 'Control',
+			scope: '#/properties/stringmulti',
 			options: {
 				multi: true,
 			},
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/dueDate',
+			scope: '#/properties/date',
 		},
 		{
 			type: 'Control',
-			scope: '#/properties/rating',
+			scope: '#/properties/time',
+		},
+		{
+			type: 'Control',
+			scope: '#/properties/datetime',
+		},
+		{
+			type: 'Control',
+			scope: '#/properties/integer',
 		},
 	],
 };
@@ -62,12 +85,11 @@ const initialData = {};
 
 export function App() {
 	const [data, setData] = React.useState(initialData);
-	console.log({ renderers });
 	return (
 		<ThemeProvider>
 			<ThemeProvider.GlobalStyle />
 			<div style={{ padding: 20, width: 900 }}>
-				<h1>Hello jsonforms</h1>
+				<h1>jsonforms on top of Coral</h1>
 				<Form>
 					<JsonForms
 						schema={schema}
