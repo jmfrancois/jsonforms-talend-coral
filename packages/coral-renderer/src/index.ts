@@ -1,11 +1,11 @@
 import { RankedTester } from '@jsonforms/core';
-import { BooleanControl, booleanTester } from './controls/boolean';
-import { DateControl, dateTester } from './controls/date';
-import { TimeControl, timeTester } from './controls/time';
-import { StringControl, stringTester } from './controls/string';
-import { IntegerControl, integerTester } from './controls/integer';
-import { DateTimeControl, dateTimeTester } from './controls/datetime';
-import { SelectControl, selectTester } from './controls/select';
+import { BooleanControl, booleanTester } from './primitives/boolean';
+import { DateControl, dateTester } from './primitives/date';
+import { TimeControl, timeTester } from './primitives/time';
+import { StringControl, stringTester } from './primitives/string';
+import { IntegerControl, integerTester } from './primitives/integer';
+import { DateTimeControl, dateTimeTester } from './primitives/datetime';
+import { SelectControl, selectTester } from './primitives/select';
 import { VerticalLayoutRenderer, verticalLayoutTester } from './layout/vertical';
 import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horizontal';
 import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';

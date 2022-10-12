@@ -2,16 +2,12 @@ import './App.css';
 import React from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
-import { Form, ThemeProvider } from '@talend/design-system';
+import { Form, ThemeProvider, StackHorizontal } from '@talend/design-system';
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
 
-const schema = {
+const initialJSONSchema = {
 	type: 'object',
 	properties: {
-		renderer: {
-			type: 'string',
-			enum: ['coral', 'vanilla'],
-		},
 		primitives: {
 			type: 'object',
 			properties: {
@@ -71,13 +67,9 @@ const schema = {
 	required: ['name'],
 };
 
-const uischema = {
+const initialUISchema = {
 	type: 'VerticalLayout',
 	elements: [
-		{
-			type: 'Control',
-			scope: '#/properties/renderer',
-		},
 		{
 			type: 'Group',
 			label: 'My Group aka fieldset',
@@ -130,9 +122,7 @@ const uischema = {
 	],
 };
 
-const initialData = {
-	renderer: 'coral',
-};
+const initialData = {};
 
 const RENDERER: Record<string, any> = {
 	vanilla: vanillaRenderers,
@@ -145,24 +135,81 @@ const CELLS: Record<string, any> = {
 };
 
 export function App() {
+	const [schema, setSchema] = React.useState(initialJSONSchema);
+	const [uiSchema, setUISchema] = React.useState(initialUISchema);
 	const [data, setData] = React.useState(initialData);
-	const isCoral = data.renderer === 'coral';
+	const [renderer, setRenderer] = React.useState('coral');
 	return (
 		<ThemeProvider>
-			{data.renderer === 'coral' && <ThemeProvider.GlobalStyle />}
-			<div style={{ padding: 20, width: 900 }}>
-				<h1>jsonforms on top of Coral</h1>
-				<form>
-					<JsonForms
-						schema={schema}
-						uischema={uischema}
-						data={data}
-						renderers={RENDERER[data.renderer]}
-						cells={CELLS[data.renderer]}
-						onChange={({ data }) => setData(data)}
-					/>
-				</form>
-			</div>
+			<ThemeProvider.GlobalStyle />
+			<StackHorizontal gap="S" isFullWidth>
+				<div style={{ flex: 1, margin: 20 }}>
+					<h2>Configure jsonform</h2>
+					<Form>
+						<Form.Select
+							onChange={e => setRenderer(e.target.value)}
+							value={renderer}
+							label="Renderer"
+							name="renderer"
+						>
+							<option>coral</option>
+							<option>vanilla</option>
+						</Form.Select>
+						<Form.Textarea
+							label="JSON Schema"
+							rows={20}
+							value={JSON.stringify(schema, null, 2)}
+							onChange={e => {
+								let value;
+								try {
+									value = JSON.parse(e.target.value);
+									setSchema(value);
+								} catch (e) {}
+							}}
+							name="schema"
+						></Form.Textarea>
+						<Form.Textarea
+							label="UI Schema"
+							rows={20}
+							value={JSON.stringify(uiSchema, null, 2)}
+							name="uischema"
+							onChange={e => {
+								let value;
+								try {
+									value = JSON.parse(e.target.value);
+									setUISchema(value);
+								} catch (e) {}
+							}}
+						></Form.Textarea>
+						<Form.Textarea
+							label="Data"
+							rows={6}
+							value={JSON.stringify(data, null, 2)}
+							name="data"
+							onChange={e => {
+								let value;
+								try {
+									value = JSON.parse(e.target.value);
+									setData(value);
+								} catch (e) {}
+							}}
+						></Form.Textarea>
+					</Form>
+				</div>
+				<div style={{ flex: 2, margin: 20 }}>
+					<h2>see jsonforms using {renderer} renderer</h2>
+					<form>
+						<JsonForms
+							schema={schema}
+							uischema={uiSchema}
+							data={data}
+							renderers={RENDERER[renderer]}
+							cells={CELLS[renderer]}
+							onChange={({ data }) => setData(data)}
+						/>
+					</form>
+				</div>
+			</StackHorizontal>
 		</ThemeProvider>
 	);
 }
