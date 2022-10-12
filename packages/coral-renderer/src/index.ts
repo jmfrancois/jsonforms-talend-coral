@@ -8,6 +8,7 @@ import { DateTimeControl, dateTimeTester } from './controls/datetime';
 import { SelectControl, selectTester } from './controls/select';
 import { VerticalLayoutRenderer, verticalLayoutTester } from './layout/vertical';
 import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horizontal';
+import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -19,6 +20,7 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: selectTester, renderer: SelectControl },
 	{ tester: verticalLayoutTester, renderer: VerticalLayoutRenderer },
 	{ tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },
+	{ tester: groupLayoutTester, renderer: GroupLayoutRenderer },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [

@@ -79,47 +79,53 @@ const uischema = {
 			scope: '#/properties/renderer',
 		},
 		{
-			type: 'HorizontalLayout',
+			type: 'Group',
+			label: 'My Group aka fieldset',
 			elements: [
 				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/boolean',
+					type: 'HorizontalLayout',
+					elements: [
+						{
+							type: 'Control',
+							scope: '#/properties/primitives/properties/boolean',
+						},
+						{
+							type: 'Control',
+							scope: '#/properties/primitives/properties/toggle',
+							options: {
+								toggle: true,
+							},
+						},
+					],
 				},
 				{
 					type: 'Control',
-					scope: '#/properties/primitives/properties/toggle',
+					scope: '#/properties/primitives/properties/string',
+				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/stringmulti',
 					options: {
-						toggle: true,
+						multi: true,
 					},
 				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/date',
+				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/time',
+				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/datetime',
+				},
+				{
+					type: 'Control',
+					scope: '#/properties/primitives/properties/integer',
+				},
 			],
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/string',
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/stringmulti',
-			options: {
-				multi: true,
-			},
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/date',
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/time',
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/datetime',
-		},
-		{
-			type: 'Control',
-			scope: '#/properties/primitives/properties/integer',
 		},
 	],
 };
@@ -140,12 +146,13 @@ const CELLS: Record<string, any> = {
 
 export function App() {
 	const [data, setData] = React.useState(initialData);
+	const isCoral = data.renderer === 'coral';
 	return (
 		<ThemeProvider>
-			<ThemeProvider.GlobalStyle />
+			{data.renderer === 'coral' && <ThemeProvider.GlobalStyle />}
 			<div style={{ padding: 20, width: 900 }}>
 				<h1>jsonforms on top of Coral</h1>
-				<Form>
+				<form>
 					<JsonForms
 						schema={schema}
 						uischema={uischema}
@@ -154,7 +161,7 @@ export function App() {
 						cells={CELLS[data.renderer]}
 						onChange={({ data }) => setData(data)}
 					/>
-				</Form>
+				</form>
 			</div>
 		</ThemeProvider>
 	);
