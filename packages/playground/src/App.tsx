@@ -1,11 +1,25 @@
 import './App.css';
 import React from 'react';
+import { JsonSchema } from '@jsonforms/core';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
 import { Form, ThemeProvider, StackHorizontal } from '@talend/design-system';
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
 
-const initialJSONSchema = {
+const JSON_SCHEMA_KEY = 'talend-json-schema-key';
+const UI_SCHEMA_KEY = 'talend-ui-schema-key';
+
+const initialJSONSchemaStr = localStorage.getItem(JSON_SCHEMA_KEY);
+let initialJSONSchema: JsonSchema | undefined;
+if (initialJSONSchemaStr) {
+	try {
+		initialJSONSchema = JSON.parse(initialJSONSchemaStr) as JsonSchema;
+	} catch (e) {
+		initialJSONSchema = undefined;
+	}
+}
+
+initialJSONSchema = initialJSONSchema || {
 	type: 'object',
 	properties: {
 		primitives: {
@@ -67,7 +81,17 @@ const initialJSONSchema = {
 	required: ['name'],
 };
 
-const initialUISchema = {
+const initialUISchemaStr = localStorage.getItem(UI_SCHEMA_KEY);
+let initialUISchema: any;
+if (initialUISchemaStr) {
+	try {
+		initialUISchema = JSON.parse(initialUISchemaStr);
+	} catch (e) {
+		initialUISchema = undefined;
+	}
+}
+
+initialUISchema = initialUISchema || {
 	type: 'VerticalLayout',
 	elements: [
 		{
@@ -164,6 +188,7 @@ export function App() {
 								try {
 									value = JSON.parse(e.target.value);
 									setSchema(value);
+									localStorage.setItem(JSON_SCHEMA_KEY, e.target.value);
 								} catch (e) {}
 							}}
 							name="schema"
@@ -178,6 +203,7 @@ export function App() {
 								try {
 									value = JSON.parse(e.target.value);
 									setUISchema(value);
+									localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
 								} catch (e) {}
 							}}
 						></Form.Textarea>

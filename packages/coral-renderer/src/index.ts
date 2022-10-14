@@ -9,6 +9,7 @@ import { SelectControl, selectTester } from './primitives/select';
 import { VerticalLayoutRenderer, verticalLayoutTester } from './layout/vertical';
 import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horizontal';
 import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';
+import { CategorizationRenderer, categorizationTester } from './layout/categorization';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -21,6 +22,7 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: verticalLayoutTester, renderer: VerticalLayoutRenderer },
 	{ tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },
 	{ tester: groupLayoutTester, renderer: GroupLayoutRenderer },
+	{ tester: categorizationTester, renderer: CategorizationRenderer },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [
