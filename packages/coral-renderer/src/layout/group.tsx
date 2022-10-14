@@ -4,7 +4,6 @@ import { withJsonFormsLayoutProps, JsonFormsDispatch, useJsonForms } from '@json
 import { Form } from '@talend/design-system';
 
 function BaseGroupLayoutRenderer(props: LayoutProps) {
-	console.log(props);
 	const { renderers, cells } = useJsonForms();
 	const uischema = props.uischema as Layout;
 	return (

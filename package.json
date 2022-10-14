@@ -9,9 +9,10 @@
     "packages/playground"
   ],
   "scripts": {
+    "postinstall": "npm run build --workspaces",
     "start": "npm run start --workspace=coral-renderer-playground",
-    "build": "echo WAT",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces"
   },
   "devDependencies": {
     "@talend/scripts-config-prettier": "^11.0.0"
