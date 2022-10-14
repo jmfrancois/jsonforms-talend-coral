@@ -8,6 +8,7 @@ import {
 	rankWith,
 	uiTypeIs,
 	LayoutProps,
+	Layout,
 } from '@jsonforms/core';
 import {
 	useJsonForms,
@@ -42,9 +43,11 @@ export const categorizationTester: RankedTester = rankWith(
 );
 
 function BaseCategory(props: any) {
+	const uischema = props.uischema as Layout;
+	const elements = uischema.elements || [];
 	return (
 		<>
-			{props.uischema.elements.map((child: any) => (
+			{elements.map((child: any) => (
 				<JsonFormsDispatch {...props} uischema={child} />
 			))}
 		</>
@@ -54,7 +57,7 @@ function BaseCategory(props: any) {
 const CategoryRenderer = withJsonFormsLayoutProps(BaseCategory);
 
 function BaseCategorizationRenderer(props: LayoutProps & TranslateProps) {
-	const { uischema, visible, t } = props;
+	const { uischema, t } = props;
 	const categorization = uischema as Categorization;
 
 	const { renderers, cells } = useJsonForms();
@@ -62,7 +65,9 @@ function BaseCategorizationRenderer(props: LayoutProps & TranslateProps) {
 		() => categorization.elements.map(cat => deriveLabelForUISchemaElement(cat, t)),
 		[categorization, t],
 	);
-
+	if (!props.visible) {
+		return null;
+	}
 	// TODO: this one is quite hard, as I do not have tabs + tab component
 	// we need to create elements and analyze the uischema using jsonforms/core
 	const tabs = categorization.elements.map((child: any, index: any) => ({

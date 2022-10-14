@@ -10,6 +10,7 @@ import { VerticalLayoutRenderer, verticalLayoutTester } from './layout/vertical'
 import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horizontal';
 import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';
 import { CategorizationRenderer, categorizationTester } from './layout/categorization';
+import { NumberControl, numberTester } from './primitives/number';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -18,6 +19,7 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: timeTester, renderer: TimeControl },
 	{ tester: dateTimeTester, renderer: DateTimeControl },
 	{ tester: integerTester, renderer: IntegerControl },
+	{ tester: numberTester, renderer: NumberControl },
 	{ tester: selectTester, renderer: SelectControl },
 	{ tester: verticalLayoutTester, renderer: VerticalLayoutRenderer },
 	{ tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },

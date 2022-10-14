@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { isBooleanControl, RankedTester, rankWith } from '@jsonforms/core';
+import { isBooleanControl, RankedTester, rankWith, ControlProps } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { Form } from '@talend/design-system';
 
-export function BaseBooleanControl(props: any) {
+export function BaseBooleanControl(props: ControlProps) {
+	if (!props.visible) {
+		return null;
+	}
 	if (props?.uischema?.options?.toggle) {
 		return (
 			<Form.ToggleSwitch
 				label={props.label}
 				checked={props.data}
+				disabled={!props.enabled}
 				name={props.path}
 				required={props.required}
 				onChange={e => props.handleChange(props.path, e.target.value)}
@@ -20,6 +24,7 @@ export function BaseBooleanControl(props: any) {
 			label={props.label}
 			checked={props.data}
 			name={props.path}
+			disabled={!props.enabled}
 			required={props.required}
 			onChange={e => props.handleChange(props.path, e.target.value)}
 		/>

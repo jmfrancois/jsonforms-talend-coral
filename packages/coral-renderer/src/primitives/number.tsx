@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { isIntegerControl, RankedTester, rankWith, ControlProps } from '@jsonforms/core';
+import { isNumberControl, RankedTester, rankWith, ControlProps } from '@jsonforms/core';
 import { Form } from '@talend/design-system';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 
-export function BaseIntegerControl(props: ControlProps) {
+export function BaseNumberControl(props: ControlProps) {
 	if (!props.visible) {
 		return null;
 	}
@@ -30,11 +30,12 @@ export function BaseIntegerControl(props: ControlProps) {
 			label={props.label}
 			value={props.data}
 			name={props.path}
+			step="0.1"
 			onChange={e => props.handleChange(props.path, e.target.value)}
 			required={props.required}
 		/>
 	);
 }
 
-export const integerTester: RankedTester = rankWith(2, isIntegerControl);
-export const IntegerControl = withJsonFormsControlProps(BaseIntegerControl);
+export const numberTester: RankedTester = rankWith(2, isNumberControl);
+export const NumberControl = withJsonFormsControlProps(BaseNumberControl);

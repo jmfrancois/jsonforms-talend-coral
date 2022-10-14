@@ -159,9 +159,12 @@ const CELLS: Record<string, any> = {
 };
 
 export function App() {
+	const [uiSchemaError, setUISchemaError] = React.useState();
+	const [schemaError, setSchemaError] = React.useState();
 	const [schema, setSchema] = React.useState(initialJSONSchema);
 	const [uiSchema, setUISchema] = React.useState(initialUISchema);
 	const [data, setData] = React.useState(initialData);
+	const [readOnly, setReadOnly] = React.useState(false);
 	const [renderer, setRenderer] = React.useState('coral');
 	return (
 		<ThemeProvider>
@@ -170,6 +173,12 @@ export function App() {
 				<div style={{ flex: 1, margin: 20 }}>
 					<h2>Configure jsonform</h2>
 					<Form>
+						<Form.ToggleSwitch
+							onChange={e => setReadOnly(!readOnly)}
+							checked={readOnly}
+							label="Read Only"
+							name="readonly"
+						/>
 						<Form.Select
 							onChange={e => setRenderer(e.target.value)}
 							value={renderer}
@@ -182,29 +191,40 @@ export function App() {
 						<Form.Textarea
 							label="JSON Schema"
 							rows={20}
-							value={JSON.stringify(schema, null, 2)}
+							hasError={!!schemaError}
+							description={schemaError}
+							value={localStorage.getItem(JSON_SCHEMA_KEY) || ''}
 							onChange={e => {
-								let value;
 								try {
-									value = JSON.parse(e.target.value);
+									setSchemaError(undefined);
+									const value = JSON.parse(e.target.value);
+									localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(value, null, 2));
 									setSchema(value);
+								} catch (error: any) {
+									setSchemaError(error.message);
 									localStorage.setItem(JSON_SCHEMA_KEY, e.target.value);
-								} catch (e) {}
+								}
 							}}
 							name="schema"
 						></Form.Textarea>
 						<Form.Textarea
 							label="UI Schema"
 							rows={20}
-							value={JSON.stringify(uiSchema, null, 2)}
+							value={localStorage.getItem(UI_SCHEMA_KEY) || ''}
+							hasError={!!uiSchemaError}
+							description={uiSchemaError}
 							name="uischema"
 							onChange={e => {
-								let value;
 								try {
-									value = JSON.parse(e.target.value);
+									setUISchemaError(undefined);
+									const value = JSON.parse(e.target.value);
 									setUISchema(value);
+									localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(value, null, 2));
+								} catch (error: any) {
+									setUISchemaError(error.message);
+									console.error(error);
 									localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
-								} catch (e) {}
+								}
 							}}
 						></Form.Textarea>
 						<Form.Textarea
@@ -232,6 +252,7 @@ export function App() {
 							renderers={RENDERER[renderer]}
 							cells={CELLS[renderer]}
 							onChange={({ data }) => setData(data)}
+							readonly={readOnly}
 						/>
 					</form>
 				</div>

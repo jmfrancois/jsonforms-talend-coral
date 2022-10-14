@@ -4,7 +4,6 @@ import { withJsonFormsLayoutProps, JsonFormsDispatch, useJsonForms } from '@json
 import { StackVertical } from '@talend/design-system';
 
 function BaseVerticalLayoutRenderer(props: RendererProps) {
-	console.log(props);
 	const uischema = props.uischema as Layout;
 	const { renderers, cells } = useJsonForms();
 	return (
