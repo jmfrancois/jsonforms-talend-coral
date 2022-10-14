@@ -28,12 +28,8 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: App Demo
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build # The folder the action should deploy.
-
       - name: App Deploy 🚀
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build # The folder the action should deploy.
+          folder: packages/playground/build # The folder the action should deploy.
