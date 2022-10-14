@@ -2,6 +2,7 @@
   "name": "coral-renderer-playground",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jmfrancois.github.io/jsonforms-talend-coral",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
