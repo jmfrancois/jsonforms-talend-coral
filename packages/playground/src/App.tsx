@@ -3,8 +3,9 @@ import React from 'react';
 import { JsonSchema } from '@jsonforms/core';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
-import { Form, ThemeProvider, StackHorizontal } from '@talend/design-system';
+import { Form, ThemeProvider, StackHorizontal, IconsProvider } from '@talend/design-system';
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
+import { OpenAPI } from './OpenAPI';
 
 const JSON_SCHEMA_KEY = 'talend-json-schema-key';
 const UI_SCHEMA_KEY = 'talend-ui-schema-key';
@@ -169,6 +170,7 @@ export function App() {
 	return (
 		<ThemeProvider>
 			<ThemeProvider.GlobalStyle />
+			<IconsProvider />
 			<StackHorizontal gap="S" isFullWidth>
 				<div style={{ flex: 1, margin: 20 }}>
 					<h2>Configure jsonform</h2>
@@ -255,6 +257,11 @@ export function App() {
 							readonly={readOnly}
 						/>
 					</form>
+					<OpenAPI
+						url="petstore.oas3.json"
+						renderers={RENDERER[renderer]}
+						cells={CELLS[renderer]}
+					/>
 				</div>
 			</StackHorizontal>
 		</ThemeProvider>
