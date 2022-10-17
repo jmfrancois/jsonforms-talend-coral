@@ -95,6 +95,7 @@ export function App() {
 	}
 	React.useEffect(() => {
 		loadSchema(initialSource);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<ThemeProvider>
