@@ -15,7 +15,7 @@ export function BaseBooleanControl(props: ControlProps) {
 				disabled={!props.enabled}
 				name={props.path}
 				required={props.required}
-				onChange={e => props.handleChange(props.path, e.target.value)}
+				onChange={e => props.handleChange(props.path, !!e.target.checked)}
 			/>
 		);
 	}
@@ -26,7 +26,7 @@ export function BaseBooleanControl(props: ControlProps) {
 			name={props.path}
 			disabled={!props.enabled}
 			required={props.required}
-			onChange={e => props.handleChange(props.path, e.target.value)}
+			onChange={e => props.handleChange(props.path, e.target.checked)}
 		/>
 	);
 }
