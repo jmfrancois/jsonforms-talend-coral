@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/jsonforms-talend-coral/static/css/main.cb82eaee.css",
-    "main.js": "/jsonforms-talend-coral/static/js/main.55462c4a.js",
+    "main.js": "/jsonforms-talend-coral/static/js/main.867aec80.js",
     "static/media/source-sans-pro-700.woff": "/jsonforms-talend-coral/static/media/source-sans-pro-700.71261353a1d4e98c646f.woff",
     "static/media/source-sans-pro-400.woff": "/jsonforms-talend-coral/static/media/source-sans-pro-400.5533a6de69fa9743fe6f.woff",
     "static/media/source-sans-pro-600.woff": "/jsonforms-talend-coral/static/media/source-sans-pro-600.24d5e29793cd5966cffc.woff",
@@ -40,10 +40,10 @@
     "static/media/inconsolata-latin-400.woff2": "/jsonforms-talend-coral/static/media/inconsolata-latin-400.5defbb9e7946394e7808.woff2",
     "index.html": "/jsonforms-talend-coral/index.html",
     "main.cb82eaee.css.map": "/jsonforms-talend-coral/static/css/main.cb82eaee.css.map",
-    "main.55462c4a.js.map": "/jsonforms-talend-coral/static/js/main.55462c4a.js.map"
+    "main.867aec80.js.map": "/jsonforms-talend-coral/static/js/main.867aec80.js.map"
   },
   "entrypoints": [
     "static/css/main.cb82eaee.css",
-    "static/js/main.55462c4a.js"
+    "static/js/main.867aec80.js"
   ]
 }
