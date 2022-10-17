@@ -11,6 +11,8 @@ import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horiz
 import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';
 import { CategorizationRenderer, categorizationTester } from './layout/categorization';
 import { NumberControl, numberTester } from './primitives/number';
+import { ArrayControl, arrayControlTester } from './complex/array';
+import { TableArrayControl, tableArrayControlTester } from './complex/table';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -25,6 +27,8 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },
 	{ tester: groupLayoutTester, renderer: GroupLayoutRenderer },
 	{ tester: categorizationTester, renderer: CategorizationRenderer },
+	{ tester: arrayControlTester, renderer: ArrayControl },
+	{ tester: tableArrayControlTester, renderer: TableArrayControl },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [
