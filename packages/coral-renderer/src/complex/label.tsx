@@ -7,8 +7,8 @@ export const labelRendererTester: RankedTester = rankWith(1, uiTypeIs('Label'));
 /**
  * Default renderer for a label.
  */
-export function LabelRenderer(props: LabelProps) {
-	return <label>{props.uischema.text}</label>;
+export function BaseLabelRenderer(props: LabelProps) {
+	return <label>{props.text}</label>;
 }
 
-export default withJsonFormsLabelProps(LabelRenderer);
+export const LabelRenderer = withJsonFormsLabelProps(BaseLabelRenderer);
