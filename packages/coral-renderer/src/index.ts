@@ -11,6 +11,11 @@ import { HorizontalLayoutRenderer, horizontalLayoutTester } from './layout/horiz
 import { GroupLayoutRenderer, groupLayoutTester } from './layout/group';
 import { CategorizationRenderer, categorizationTester } from './layout/categorization';
 import { NumberControl, numberTester } from './primitives/number';
+import { TableArrayControl, tableArrayControlTester } from './complex/table';
+import { TextCell, textCellTester } from './cells/TextCell';
+import { NumberCell, numberCellTester } from './cells/NumberCell';
+import { EnumCell, enumCellTester } from './cells/EnumCell';
+import { LabelRenderer, labelRendererTester } from './complex/label';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -25,6 +30,8 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: horizontalLayoutTester, renderer: HorizontalLayoutRenderer },
 	{ tester: groupLayoutTester, renderer: GroupLayoutRenderer },
 	{ tester: categorizationTester, renderer: CategorizationRenderer },
+	{ tester: tableArrayControlTester, renderer: TableArrayControl },
+	{ tester: labelRendererTester, renderer: LabelRenderer },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [
@@ -32,11 +39,11 @@ export const cells: { tester: RankedTester; cell: any }[] = [
 	// { tester: booleanCellTester, cell: BooleanCell },
 	// { tester: dateCellTester, cell: DateCell },
 	// { tester: dateTimeCellTester, cell: DateTimeCell },
-	// { tester: enumCellTester, cell: EnumCell },
+	{ tester: enumCellTester, cell: EnumCell },
 	// { tester: integerCellTester, cell: IntegerCell },
-	// { tester: numberCellTester, cell: NumberCell },
+	{ tester: numberCellTester, cell: NumberCell },
 	// { tester: sliderCellTester, cell: SliderCell },
 	// { tester: textAreaCellTester, cell: TextAreaCell },
-	// { tester: textCellTester, cell: TextCell },
+	{ tester: textCellTester, cell: TextCell },
 	// { tester: timeCellTester, cell: TimeCell }
 ];

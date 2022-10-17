@@ -13,7 +13,7 @@
   "dependencies": {
     "@jsonforms/vanilla-renderers": "^3.0.0",
     "@talend/icons": "*",
-    "@talend/design-system": "^5.0.0",
+    "@talend/design-system": "^5.4.1",
     "@talend/jsonforms-coral": "*",
     "@talend/locales-design-system": "*",
     "@types/jest": "^29.1.1",
