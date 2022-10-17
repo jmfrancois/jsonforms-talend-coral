@@ -13,6 +13,9 @@ import { CategorizationRenderer, categorizationTester } from './layout/categoriz
 import { NumberControl, numberTester } from './primitives/number';
 import { ArrayControl, arrayControlTester } from './complex/array';
 import { TableArrayControl, tableArrayControlTester } from './complex/table';
+import { TextCell, textCellTester } from './cells/TextCell';
+import { NumberCell, numberCellTester } from './cells/NumberCell';
+import { EnumCell, enumCellTester } from './cells/EnumCell';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -36,11 +39,11 @@ export const cells: { tester: RankedTester; cell: any }[] = [
 	// { tester: booleanCellTester, cell: BooleanCell },
 	// { tester: dateCellTester, cell: DateCell },
 	// { tester: dateTimeCellTester, cell: DateTimeCell },
-	// { tester: enumCellTester, cell: EnumCell },
+	{ tester: enumCellTester, cell: EnumCell },
 	// { tester: integerCellTester, cell: IntegerCell },
-	// { tester: numberCellTester, cell: NumberCell },
+	{ tester: numberCellTester, cell: NumberCell },
 	// { tester: sliderCellTester, cell: SliderCell },
 	// { tester: textAreaCellTester, cell: TextAreaCell },
-	// { tester: textCellTester, cell: TextCell },
+	{ tester: textCellTester, cell: TextCell },
 	// { tester: timeCellTester, cell: TimeCell }
 ];
