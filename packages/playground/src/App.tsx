@@ -20,6 +20,8 @@ if (initialJSONSchemaStr) {
 	}
 }
 
+const EXAMPLES = ['basic', 'control', 'categorization', 'layout-nested', 'array', 'rule'];
+
 initialJSONSchema = initialJSONSchema || {
 	type: 'object',
 	properties: {
@@ -189,6 +191,32 @@ export function App() {
 						>
 							<option>coral</option>
 							<option>vanilla</option>
+						</Form.Select>
+						<Form.Select
+							onChange={e => {
+								const example = e.target.value;
+								fetch(`${example}/schema.json`)
+									.then(r => r.json())
+									.then((value: any) => {
+										setSchemaError(undefined);
+										localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(value, null, 2));
+										setSchema(value);
+									});
+								fetch(`${example}/uischema.json`)
+									.then(r => r.json())
+									.then((value: any) => {
+										setUISchemaError(undefined);
+										setUISchema(value);
+										localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(value, null, 2));
+									});
+							}}
+							value={renderer}
+							label="Example"
+							name="example"
+						>
+							{EXAMPLES.map(example => (
+								<option key={example}>{example}</option>
+							))}
 						</Form.Select>
 						<Form.Textarea
 							label="JSON Schema"
