@@ -15,6 +15,7 @@ import { TableArrayControl, tableArrayControlTester } from './complex/table';
 import { TextCell, textCellTester } from './cells/TextCell';
 import { NumberCell, numberCellTester } from './cells/NumberCell';
 import { EnumCell, enumCellTester } from './cells/EnumCell';
+import { LabelRenderer, labelRendererTester } from './complex/label';
 
 export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: stringTester, renderer: StringControl },
@@ -30,6 +31,7 @@ export const renderers: { tester: RankedTester; renderer: any }[] = [
 	{ tester: groupLayoutTester, renderer: GroupLayoutRenderer },
 	{ tester: categorizationTester, renderer: CategorizationRenderer },
 	{ tester: tableArrayControlTester, renderer: TableArrayControl },
+	{ tester: labelRendererTester, renderer: LabelRenderer },
 ];
 
 export const cells: { tester: RankedTester; cell: any }[] = [

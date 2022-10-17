@@ -9,145 +9,36 @@ import { OpenAPI } from './OpenAPI';
 
 const JSON_SCHEMA_KEY = 'talend-json-schema-key';
 const UI_SCHEMA_KEY = 'talend-ui-schema-key';
+const SOURCE_KEY = 'talend-source-key';
 
+let initialSource = localStorage.getItem(SOURCE_KEY) || 'basic';
 const initialJSONSchemaStr = localStorage.getItem(JSON_SCHEMA_KEY);
 let initialJSONSchema: JsonSchema | undefined;
 if (initialJSONSchemaStr) {
 	try {
 		initialJSONSchema = JSON.parse(initialJSONSchemaStr) as JsonSchema;
-	} catch (e) {
-		initialJSONSchema = undefined;
-	}
+		initialSource = 'custom';
+	} catch (e) {}
 }
 
-const EXAMPLES = ['basic', 'control', 'categorization', 'layout-nested', 'array', 'rule'];
-
-initialJSONSchema = initialJSONSchema || {
-	type: 'object',
-	properties: {
-		primitives: {
-			type: 'object',
-			properties: {
-				string: {
-					type: 'string',
-					minLength: 1,
-				},
-				stringmulti: {
-					type: 'string',
-				},
-				boolean: {
-					type: 'boolean',
-				},
-				toggle: {
-					type: 'boolean',
-				},
-				date: {
-					type: 'string',
-					format: 'date',
-				},
-				time: {
-					type: 'string',
-					format: 'time',
-				},
-				datetime: {
-					type: 'string',
-					format: 'date-time',
-				},
-				integer: {
-					type: 'integer',
-					maximum: 5,
-				},
-			},
-		},
-		advanced: {
-			type: 'object',
-			properties: {
-				gender: {
-					oneOf: [
-						{
-							const: 'male',
-							title: 'Male',
-						},
-						{
-							const: 'female',
-							title: 'Female',
-						},
-						{
-							const: 'other',
-							title: 'Diverse',
-						},
-					],
-				},
-			},
-		},
-	},
-	required: ['name'],
-};
+const EXAMPLES = [
+	'basic',
+	'custom',
+	'control',
+	'categorization',
+	'layout-nested',
+	'array',
+	'rule',
+	'openapi',
+];
 
 const initialUISchemaStr = localStorage.getItem(UI_SCHEMA_KEY);
 let initialUISchema: any;
 if (initialUISchemaStr) {
 	try {
 		initialUISchema = JSON.parse(initialUISchemaStr);
-	} catch (e) {
-		initialUISchema = undefined;
-	}
+	} catch (e) {}
 }
-
-initialUISchema = initialUISchema || {
-	type: 'VerticalLayout',
-	elements: [
-		{
-			type: 'Group',
-			label: 'My Group aka fieldset',
-			elements: [
-				{
-					type: 'HorizontalLayout',
-					elements: [
-						{
-							type: 'Control',
-							scope: '#/properties/primitives/properties/boolean',
-						},
-						{
-							type: 'Control',
-							scope: '#/properties/primitives/properties/toggle',
-							options: {
-								toggle: true,
-							},
-						},
-					],
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/string',
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/stringmulti',
-					options: {
-						multi: true,
-					},
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/date',
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/time',
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/datetime',
-				},
-				{
-					type: 'Control',
-					scope: '#/properties/primitives/properties/integer',
-				},
-			],
-		},
-	],
-};
 
 const initialData = {};
 
@@ -161,7 +52,11 @@ const CELLS: Record<string, any> = {
 	coral: cells,
 };
 
+const defaultSchemaDesc = 'Write or copy paste a schema to try it';
+
 export function App() {
+	const base = process.env.PUBLIC_URL;
+	const [source, setSource] = React.useState(initialSource);
 	const [uiSchemaError, setUISchemaError] = React.useState();
 	const [schemaError, setSchemaError] = React.useState();
 	const [schema, setSchema] = React.useState(initialJSONSchema);
@@ -169,6 +64,38 @@ export function App() {
 	const [data, setData] = React.useState(initialData);
 	const [readOnly, setReadOnly] = React.useState(false);
 	const [renderer, setRenderer] = React.useState('coral');
+	function loadSchema(example: string) {
+		if (!example) {
+			return;
+		}
+		if (example === 'custom') {
+			try {
+				setSchema(JSON.parse(localStorage.getItem(JSON_SCHEMA_KEY) || ''));
+				setUISchema(JSON.parse(localStorage.getItem(UI_SCHEMA_KEY) || ''));
+			} catch (e) {}
+		} else if (example === 'openapi') {
+		} else {
+			fetch(`${base}/${example}/schema.json`)
+				.then(r => r.json())
+				.then((value: any) => {
+					setSchema(value);
+				})
+				.catch(e => {
+					console.log(e);
+				});
+			fetch(`${base}/${example}/uischema.json`)
+				.then(r => r.json())
+				.then((value: any) => {
+					setUISchema(value);
+				})
+				.catch(e => {
+					console.log(e);
+				});
+		}
+	}
+	React.useEffect(() => {
+		loadSchema(initialSource);
+	}, []);
 	return (
 		<ThemeProvider>
 			<ThemeProvider.GlobalStyle />
@@ -193,24 +120,13 @@ export function App() {
 							<option>vanilla</option>
 						</Form.Select>
 						<Form.Select
+							value={source}
 							onChange={e => {
 								const example = e.target.value;
-								fetch(`${example}/schema.json`)
-									.then(r => r.json())
-									.then((value: any) => {
-										setSchemaError(undefined);
-										localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(value, null, 2));
-										setSchema(value);
-									});
-								fetch(`${example}/uischema.json`)
-									.then(r => r.json())
-									.then((value: any) => {
-										setUISchemaError(undefined);
-										setUISchema(value);
-										localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(value, null, 2));
-									});
+								setSource(example);
+								console.log('###');
+								loadSchema(example);
 							}}
-							value={renderer}
 							label="Example"
 							name="example"
 						>
@@ -218,45 +134,6 @@ export function App() {
 								<option key={example}>{example}</option>
 							))}
 						</Form.Select>
-						<Form.Textarea
-							label="JSON Schema"
-							rows={20}
-							hasError={!!schemaError}
-							description={schemaError}
-							value={localStorage.getItem(JSON_SCHEMA_KEY) || ''}
-							onChange={e => {
-								try {
-									setSchemaError(undefined);
-									const value = JSON.parse(e.target.value);
-									localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(value, null, 2));
-									setSchema(value);
-								} catch (error: any) {
-									setSchemaError(error.message);
-									localStorage.setItem(JSON_SCHEMA_KEY, e.target.value);
-								}
-							}}
-							name="schema"
-						></Form.Textarea>
-						<Form.Textarea
-							label="UI Schema"
-							rows={20}
-							value={localStorage.getItem(UI_SCHEMA_KEY) || ''}
-							hasError={!!uiSchemaError}
-							description={uiSchemaError}
-							name="uischema"
-							onChange={e => {
-								try {
-									setUISchemaError(undefined);
-									const value = JSON.parse(e.target.value);
-									setUISchema(value);
-									localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(value, null, 2));
-								} catch (error: any) {
-									setUISchemaError(error.message);
-									console.error(error);
-									localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
-								}
-							}}
-						></Form.Textarea>
 						<Form.Textarea
 							label="Data"
 							rows={6}
@@ -270,26 +147,77 @@ export function App() {
 								} catch (e) {}
 							}}
 						></Form.Textarea>
+						{source === 'custom' ? (
+							<>
+								<Form.Textarea
+									label="JSON Schema"
+									rows={20}
+									hasError={!!schemaError}
+									description={schemaError || defaultSchemaDesc}
+									value={localStorage.getItem(JSON_SCHEMA_KEY) || ''}
+									onChange={e => {
+										try {
+											setSchemaError(undefined);
+											const value = JSON.parse(e.target.value);
+											localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(value, null, 2));
+											setSchema(value);
+										} catch (error: any) {
+											setSchemaError(error.message);
+											localStorage.setItem(JSON_SCHEMA_KEY, e.target.value);
+										}
+									}}
+									name="schema"
+								></Form.Textarea>
+								<Form.Textarea
+									label="UI Schema"
+									rows={20}
+									value={localStorage.getItem(UI_SCHEMA_KEY) || ''}
+									hasError={!!uiSchemaError}
+									description={uiSchemaError}
+									name="uischema"
+									onChange={e => {
+										try {
+											setUISchemaError(undefined);
+											const value = JSON.parse(e.target.value);
+											setUISchema(value);
+											localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(value, null, 2));
+										} catch (error: any) {
+											setUISchemaError(error.message);
+											console.error(error);
+											localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
+										}
+									}}
+								></Form.Textarea>
+							</>
+						) : (
+							<>
+								<pre>{JSON.stringify(schema, null, 2)}</pre>
+								<pre>{JSON.stringify(uiSchema, null, 2)}</pre>
+							</>
+						)}
 					</Form>
 				</div>
 				<div style={{ flex: 2, margin: 20 }}>
 					<h2>see jsonforms using {renderer} renderer</h2>
-					<form>
-						<JsonForms
-							schema={schema}
-							uischema={uiSchema}
-							data={data}
+					{source === 'openapi' ? (
+						<OpenAPI
+							url={`${base}/petstore.oas3.json`}
 							renderers={RENDERER[renderer]}
 							cells={CELLS[renderer]}
-							onChange={({ data }) => setData(data)}
-							readonly={readOnly}
 						/>
-					</form>
-					<OpenAPI
-						url="petstore.oas3.json"
-						renderers={RENDERER[renderer]}
-						cells={CELLS[renderer]}
-					/>
+					) : (
+						<form>
+							<JsonForms
+								schema={schema}
+								uischema={uiSchema}
+								data={data}
+								renderers={RENDERER[renderer]}
+								cells={CELLS[renderer]}
+								onChange={({ data }) => setData(data)}
+								readonly={readOnly}
+							/>
+						</form>
+					)}
 				</div>
 			</StackHorizontal>
 		</ThemeProvider>
