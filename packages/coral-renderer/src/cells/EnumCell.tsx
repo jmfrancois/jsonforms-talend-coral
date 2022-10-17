@@ -28,7 +28,7 @@ export const BaseEnumCell = (props: EnumCellProps & TranslateProps) => {
 					{noneOptionLabel}
 				</option>,
 			].concat(
-				options.map(optionValue => (
+				(options || []).map(optionValue => (
 					<option value={optionValue.value} label={optionValue.label} key={optionValue.value} />
 				)),
 			)}

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import fpfilter from 'lodash/fp/filter';
 import fpmap from 'lodash/fp/map';
 import fpflow from 'lodash/fp/flow';
@@ -16,18 +16,15 @@ import {
 	Resolve,
 	rankWith,
 	ArrayControlProps,
-	Helpers,
 	getControlPath,
 	Paths,
 	createDefaultValue,
 	ControlElement,
 } from '@jsonforms/core';
-import { DispatchCell, JsonFormsDispatch, withJsonFormsArrayControlProps } from '@jsonforms/react';
-import { ButtonTertiary } from '@talend/design-system';
+import { DispatchCell, withJsonFormsArrayControlProps } from '@jsonforms/react';
+import { ButtonTertiary, ButtonDestructive } from '@talend/design-system';
 
 export function BaseTableArrayControl(props: ArrayControlProps) {
-	console.log('## coucou', props);
-	const controlElement = props.uischema as ControlElement;
 	const schema = props.schema;
 	const data = props.data;
 	const properties = props.schema.properties;
@@ -130,7 +127,8 @@ export function BaseTableArrayControl(props: ArrayControlProps) {
 										)}
 									</td>
 									<td>
-										<button
+										<ButtonDestructive
+											type="button"
 											aria-label={`Delete`}
 											onClick={() => {
 												if (window.confirm('Are you sure you wish to delete this item?')) {
@@ -139,7 +137,7 @@ export function BaseTableArrayControl(props: ArrayControlProps) {
 											}}
 										>
 											Delete
-										</button>
+										</ButtonDestructive>
 									</td>
 								</tr>
 							);
