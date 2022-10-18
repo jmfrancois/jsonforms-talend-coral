@@ -3,6 +3,7 @@ import React from 'react';
 import { JsonSchema } from '@jsonforms/core';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
+import { renderers as vscodeRenderers, cells as vscodeCells } from '@talend/jsonforms-vscode';
 import {
 	Form,
 	ThemeProvider,
@@ -51,11 +52,13 @@ const initialData = {};
 const RENDERER: Record<string, any> = {
 	vanilla: vanillaRenderers,
 	coral: renderers,
+	vscode: vscodeRenderers,
 };
 
 const CELLS: Record<string, any> = {
 	vanilla: vanillaCells,
 	coral: cells,
+	vscode: vscodeCells,
 };
 
 const defaultSchemaDesc = 'Write or copy paste a schema to try it';
@@ -124,6 +127,7 @@ export function App() {
 							name="renderer"
 						>
 							<option>coral</option>
+							<option>vscode</option>
 							<option>vanilla</option>
 						</Form.Select>
 						<Form.Select
@@ -183,6 +187,7 @@ export function App() {
 									description={uiSchemaError}
 									name="uischema"
 									onChange={e => {
+										localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
 										try {
 											setUISchemaError(undefined);
 											const value = JSON.parse(e.target.value);
@@ -191,7 +196,6 @@ export function App() {
 										} catch (error: any) {
 											setUISchemaError(error.message);
 											console.error(error);
-											localStorage.setItem(UI_SCHEMA_KEY, e.target.value);
 										}
 									}}
 								></Form.Textarea>

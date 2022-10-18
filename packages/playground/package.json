@@ -15,6 +15,7 @@
     "@talend/icons": "*",
     "@talend/design-system": "^5.4.1",
     "@talend/jsonforms-coral": "*",
+    "@talend/jsonforms-vscode": "*",
     "@talend/locales-design-system": "*",
     "@types/jest": "^29.1.1",
     "@types/node": "^18.8.2",
