@@ -3,7 +3,13 @@ import React from 'react';
 import { JsonSchema } from '@jsonforms/core';
 import { JsonForms } from '@jsonforms/react';
 import { renderers, cells } from '@talend/jsonforms-coral';
-import { Form, ThemeProvider, StackHorizontal, IconsProvider } from '@talend/design-system';
+import {
+	Form,
+	ThemeProvider,
+	StackHorizontal,
+	IconsProvider,
+	ButtonPrimary,
+} from '@talend/design-system';
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
 import { OpenAPI } from './OpenAPI';
 
@@ -148,7 +154,7 @@ export function App() {
 								} catch (e) {}
 							}}
 						></Form.Textarea>
-						{source === 'custom' ? (
+						{source === 'custom' && (
 							<>
 								<Form.Textarea
 									label="JSON Schema"
@@ -190,8 +196,18 @@ export function App() {
 									}}
 								></Form.Textarea>
 							</>
-						) : (
+						)}
+						{source !== 'custom' && source !== 'openapi' && (
 							<>
+								<ButtonPrimary
+									onClick={() => {
+										localStorage.setItem(JSON_SCHEMA_KEY, JSON.stringify(schema, null, 2));
+										localStorage.setItem(UI_SCHEMA_KEY, JSON.stringify(uiSchema, null, 2));
+										setSource('custom');
+									}}
+								>
+									Customize
+								</ButtonPrimary>
 								<pre>{JSON.stringify(schema, null, 2)}</pre>
 								<pre>{JSON.stringify(uiSchema, null, 2)}</pre>
 							</>
