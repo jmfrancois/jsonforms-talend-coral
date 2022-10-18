@@ -7,6 +7,11 @@
     },
     {
       "type": "Control",
+      "scope": "#/properties/multistring",
+      "options": { "multi": true }
+    },
+    {
+      "type": "Control",
       "scope": "#/properties/boolean"
     },
     {

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { isIntegerControl, RankedTester, rankWith, ControlProps } from '@jsonforms/core';
 import { Form } from '@talend/design-system';
 import { withJsonFormsControlProps } from '@jsonforms/react';
+const toNumber = (value: string) => (value === '' ? undefined : parseInt(value, 10));
 
 export function BaseIntegerControl(props: ControlProps) {
 	if (!props.visible) {
@@ -30,7 +31,7 @@ export function BaseIntegerControl(props: ControlProps) {
 			label={props.label}
 			value={props.data}
 			name={props.path}
-			onChange={e => props.handleChange(props.path, e.target.value)}
+			onChange={e => props.handleChange(props.path, toNumber(e.target.value))}
 			required={props.required}
 		/>
 	);

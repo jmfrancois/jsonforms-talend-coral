@@ -4,6 +4,9 @@
     "string": {
       "type": "string"
     },
+    "multistring": {
+      "type": "string"
+    },
     "boolean": {
       "type": "boolean"
     },
