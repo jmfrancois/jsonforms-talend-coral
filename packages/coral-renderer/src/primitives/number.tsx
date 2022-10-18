@@ -3,6 +3,7 @@ import * as React from 'react';
 import { isNumberControl, RankedTester, rankWith, ControlProps } from '@jsonforms/core';
 import { Form } from '@talend/design-system';
 import { withJsonFormsControlProps } from '@jsonforms/react';
+const toNumber = (value: string) => (value === '' ? undefined : Number(value));
 
 export function BaseNumberControl(props: ControlProps) {
 	if (!props.visible) {
@@ -31,7 +32,7 @@ export function BaseNumberControl(props: ControlProps) {
 			value={props.data}
 			name={props.path}
 			step="0.1"
-			onChange={e => props.handleChange(props.path, e.target.value)}
+			onChange={e => props.handleChange(props.path, toNumber(e.target.value))}
 			required={props.required}
 		/>
 	);
