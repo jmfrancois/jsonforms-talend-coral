@@ -6,6 +6,7 @@
   "main": "index.js",
   "workspaces": [
     "packages/coral-renderer",
+    "packages/vscode-renderer",
     "packages/playground"
   ],
   "scripts": {
