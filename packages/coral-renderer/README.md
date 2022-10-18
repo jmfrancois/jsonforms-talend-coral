@@ -6,24 +6,26 @@ To contribute to the lib please first read https://jsonforms.io/docs/tutorial/cu
 
 ## renderer set
 
+Current status checked means here but no test (still a POC)
+
 | JSON Schema         | Renderer          | Status |
 | ------------------- | ----------------- | ------ |
-| boolean             | checkbox          |        |
-|                     | toggle            |        |
-| integer             | number            |        |
+| boolean             | checkbox          | [x]    |
+|                     | toggle            | [x]    |
+| integer             | number            | [x]    |
 |                     | tel               |        |
-| string              | text              |        |
-|                     | textarea          |        |
-| enum                | combo             |        |
+| string              | text              | [x]    |
+|                     | textarea          | [x]    |
+| enum                | combo             | [x]    |
 |                     | autocomplete      |        |
 | oneof (const/title) | combo             |        |
 |                     | autocomplete      |        |
-| date format         | date              |        |
-| time format         | time              |        |
-| datetime format     | datetime          |        |
-| object              | vertical grid     |        |
+| date format         | date              | [x]    |
+| time format         | time              | [x]    |
+| datetime format     | datetime          | [x]    |
+| object              | vertical grid     | [x]    |
 | array of primitives | list              |        |
-| array of objects    | table             |        |
+| array of objects    | table             | [x]    |
 |                     | list              |        |
 |                     | list with details |        |
 | array of enum       | multiple choices  |        |
@@ -33,7 +35,7 @@ To contribute to the lib please first read https://jsonforms.io/docs/tutorial/cu
 
 | UI schema       | Renderer      | status |
 | --------------- | ------------- | ------ |
-| vertical layout | vertical grid |        |
-| categorization  | tabs          |        |
-| group           | group         |        |
-| label           | text          |        |
+| vertical layout | vertical grid | [x]    |
+| categorization  | tabs          | [x]    |
+| group           | group         | [x]    |
+| label           | text          | [x]    |
